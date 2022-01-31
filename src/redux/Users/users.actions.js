@@ -1,14 +1,9 @@
-import {
-  CREATE_USER,
-  FETCH_USERS,
-  UPDATE_USER,
-  DELETE_USER,
-} from './users.types'
+import { FETCH_USERS, DELETE_USER } from './users.types'
 
 import users from '../../apis/users'
 
 export const createUser = (formValues, navigate) => async dispatch => {
-  if (formValues == { name: '', email: '', phone: '', address: '' }) return
+  if (formValues === { name: '', email: '', phone: '', address: '' }) return
 
   await users.post('/create.php', formValues, {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -35,7 +30,7 @@ export const fetchUsers = () => async dispatch => {
 
 export const updateUser = (formValues, userId, navigate) => async dispatch => {
   try {
-    const response = await users.put('/update.php', { ...formValues, userId })
+    await users.put('/update.php', { ...formValues, userId })
 
     // navigate is called here instead of in the submit handling function for the purpose of programmatically navigating admin back to Home only if the POST request goes throguh
     navigate('/')

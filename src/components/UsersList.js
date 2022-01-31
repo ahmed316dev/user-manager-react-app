@@ -9,7 +9,7 @@ const UsersList = () => {
 
   useEffect(() => {
     dispatch(fetchUsers())
-  }, [])
+  }, [dispatch])
 
   // providing a list of users as an array instead of an object for the sake of making use of array methods
   const users = useSelector(state => Object.values(state.users))

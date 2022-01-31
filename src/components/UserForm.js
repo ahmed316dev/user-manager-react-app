@@ -22,10 +22,13 @@ const UserForm = props => {
   const users = useSelector(state => state.users)
 
   // checking if admin is trying to create a new user or update an existing one
-  const isUpdate = Object.values(users).find(user => user.id == currentId)
-
+  const isUpdate = Object.values(users).find(
+    user => user.id === parseInt(currentId)
+  )
   // grabs all the data from the user admin is trying to update
-  const userToEdit = Object.values(users).find(user => user.id == currentId)
+  const userToEdit = Object.values(users).find(
+    user => user.id === parseInt(currentId)
+  )
 
   // Dispatching actions depending on whether the admin is creating a user or updating an existing one
   const onSubmit = formValues => {
@@ -38,27 +41,31 @@ const UserForm = props => {
     const error = {}
 
     const emailExists = email =>
-      !isUpdate && Object.values(users).find(user => user.email == email)
+      !isUpdate && Object.values(users).find(user => user.email === email)
     const phoneExists = phone =>
-      !isUpdate && Object.values(users).find(user => user.phone == phone)
+      !isUpdate && Object.values(users).find(user => user.phone === phone)
     const emailIsValid = email =>
-      /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
         email
       )
     const phoneIsValid = phone =>
       /^\D*(\d\D*){6,15}$/.test(phone) ? true : false
 
     const usersWithoutCurrentUsers = Object.values(users).filter(
-      user => user.id != currentId
+      user => user.id !== parseInt(currentId)
     )
 
     // checks if admin has provided email/phone that don't belong to another user
     const editToUniqueEmail = email =>
       isUpdate &&
-      !Object.values(usersWithoutCurrentUsers).find(user => user.email == email)
+      !Object.values(usersWithoutCurrentUsers).find(
+        user => user.email === email
+      )
     const editToUniquePhone = phone =>
       isUpdate &&
-      !Object.values(usersWithoutCurrentUsers).find(user => user.phone == phone)
+      !Object.values(usersWithoutCurrentUsers).find(
+        user => user.phone === phone
+      )
 
     if (!name) error.name = 'You must enter a name'
     if (!email) error.email = 'You must enter an email'
